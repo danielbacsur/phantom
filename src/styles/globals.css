@@ -33,7 +33,7 @@ a {
 @layer base {
   @font-face {
     font-family: Tostada;
-    src: url(../fonts/tostada.ttf) format("woff");
+    src: url("./tostada.ttf") format("woff");
   }
 
   .splitwrap {

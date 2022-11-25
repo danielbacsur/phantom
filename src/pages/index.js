@@ -1,34 +1,49 @@
-import Wrapper from "components/Wrapper"
-
+import Wrapper from "components/Wrapper";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useRef } from "react";
+import { useGLTF } from "@react-three/drei";
+import { Suspense, useRef } from "react";
+import * as THREE from "three";
 
-function Box() {
-  const boxRef = useRef();
+
+export function Model() {
+  const { nodes } = useGLTF("/cypher.glb");
 
   useFrame(() => {
-    boxRef.current.rotation.y += 0.002;
+    reff.current.rotation.y += 0.002;
   });
 
+  const reff = useRef();
   return (
-    <mesh ref={boxRef}>
-      <boxGeometry args={[84, 1, 52]} />
-      <meshStandardMaterial color="black" wireframe />
-    </mesh>
+    <group ref={reff}>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.imagetostl_mesh.geometry}
+        material={new THREE.MeshBasicMaterial({ color: 0x0, wireframe: true })}
+        position={[-84 / 2, 0, 52 / 2]}
+      />
+    </group>
   );
 }
 
+useGLTF.preload("/cypher.glb");
+
 function ThreeScene() {
   return (
-
-    <Canvas orthographic camera={{
-      position: [200, 100, 200], left: -2,
-      right: 2, top: 2, bottom: -2, zoom: 8
-    }}>
-      <ambientLight />
-      <pointLight position={[5, 5, 5]} intensity={2} />
-      <pointLight position={[-3, -3, 2]} />
-      <Box />
+    <Canvas
+      orthographic
+      camera={{
+        position: [200, 200, 200],
+        left: -2,
+        right: 2,
+        top: 2,
+        bottom: -2,
+        zoom: 8,
+      }}
+    >
+      <Suspense>
+        <Model />
+      </Suspense>
     </Canvas>
   );
 }
@@ -36,10 +51,9 @@ function ThreeScene() {
 export default function Home() {
   return (
     <Wrapper>
-      <div className="hidden md:block h-full w-full mx-auto">
+      <div className="w-full h-[calc(100vh-8rem)] hidden md:block">
         <ThreeScene />
-        {/* <span className="absolute top-1/2 left-1/2 text-8xl font-tostada">cypher</span> */}
       </div>
     </Wrapper>
-  )
+  );
 }
