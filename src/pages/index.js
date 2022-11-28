@@ -15,27 +15,7 @@ import Link from "next/link";
 export default function App() {
   return (
     <div className="w-screen h-screen bg-white text-white font-karla">
-        <div className="w-full h-32 shadow-[0px_22px_70px_4px_rgba(0,0,0,0.1)] bg-black/10 z-50 fixed top-0">
-    <div className="h-full container mx-auto flex items-center justify-center md:justify-between p-8">
-      <Link className="font-tostada text-2xl hidden md:block" href="/">
-        phantom
-      </Link>
-      <div className="flex space-x-8">
-        <Link className="text-sm font-bold" href="/">
-          Home
-        </Link>
-        <Link className="text-sm font-bold" href="/about">
-          About
-        </Link>
-        <Link className="text-sm font-bold" href="/project">
-          Project
-        </Link>
-        <Link className="text-sm font-bold" href="/competition">
-          Competition
-        </Link>
-      </div>
-    </div>
-  </div>
+      <Navbar />
       <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 10], fov: 22 }}>
         <Bg />
         <Suspense fallback={null}>

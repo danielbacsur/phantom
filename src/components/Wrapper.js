@@ -8,8 +8,8 @@ const Wrapper = ({ children }) => {
   return (
     <div className="bg-white text-black font-karla">
       <Navbar />
-      <div className="w-full min-h-[calc(100vh-8rem)] mt-32">{children}</div>
-      <Footer />
+      <div className="w-full min-h-[calc(100vh-8rem)] pt-32">{children}</div>
+      {/* <Footer /> */}
     </div>
   );
 };

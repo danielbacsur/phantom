@@ -1,13 +1,16 @@
 import Article from "components/Article";
 import Container from "components/Container";
 import Header from "components/Header";
+import Navbar from "components/Navbar";
 import Paragraph from "components/Paragraph";
 import Wrapper from "components/Wrapper";
 import Link from "next/link";
 
 const Post = () => {
   return (
-    <Wrapper>
+    <div className="w-full h-screen bg-white text-black font-karla pt-32">
+      <Navbar />
+
       <Container>
         <Article>
           <Header>competition</Header>
@@ -49,7 +52,7 @@ const Post = () => {
           </Paragraph>
         </Article>
       </Container>
-    </Wrapper>
+    </div>
   );
 };
 
