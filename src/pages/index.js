@@ -6,21 +6,18 @@ import { LayerMaterial, Depth, Noise } from "lamina";
 import Phantoms from "components/Phantoms";
 import {
   EffectComposer,
-  DepthOfField,
   Vignette,
 } from "@react-three/postprocessing";
 import Navbar from "components/Navbar";
-import Link from "next/link";
 
 export default function App() {
   return (
-    <div className="w-screen h-screen bg-white text-white font-karla">
-      <Navbar />
+    <>
+      <Navbar white />
       <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 10], fov: 22 }}>
         <Bg />
         <Suspense fallback={null}>
           <Phantoms />
-          {/* <Caption>{`play\n clone\n  repeat`}</Caption> */}
           <Caption>{`phantom`}</Caption>
           <Rig />
         </Suspense>
@@ -29,7 +26,7 @@ export default function App() {
           <Vignette eskil={false} offset={0.5} darkness={0.5} />
         </EffectComposer>
       </Canvas>
-    </div>
+    </>
   );
 }
 

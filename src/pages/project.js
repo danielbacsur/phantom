@@ -151,9 +151,8 @@ import Title from "components/Title";
 
 // export default Post;
 
-import Wrapper from "components/Wrapper";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, useGLTF } from "@react-three/drei";
+import { Html, OrbitControls, useGLTF } from "@react-three/drei";
 import { Suspense, useRef } from "react";
 import * as THREE from "three";
 import Navbar from "components/Navbar";
@@ -161,10 +160,8 @@ import Article from "components/Article";
 
 export function Model() {
   const { nodes } = useGLTF("/cypher.glb");
-
-  const reff = useRef();
   return (
-    <group ref={reff}>
+    <group>
       <mesh
         castShadow
         receiveShadow
@@ -172,6 +169,31 @@ export function Model() {
         material={new THREE.MeshBasicMaterial({ color: 0x0, wireframe: true })}
         position={[-84 / 2, 0, 52 / 2]}
       />
+      <Html position={[84 / 2 + 10, 0, 0]}>
+        <div className="bg-red-600 rounded-full px-4 -translate-x-1/2 -translate-y-1/2 text-center whitespace-nowrap">
+          <span className="text-sm">USB-C</span>
+        </div>
+      </Html>
+      <Html position={[-84 / 2 - 10, 0, 0]}>
+        <div className="bg-red-600 rounded-full px-4 -translate-x-1/2 -translate-y-1/2 text-center whitespace-nowrap">
+          <span className="text-sm">WiFi & BLE</span>
+        </div>
+      </Html>
+      <Html position={[-84 / 4, 4, 0]}>
+        <div className="bg-red-600 rounded-full px-4 -translate-x-1/2 -translate-y-1/2 text-center whitespace-nowrap">
+          <span className="text-sm">DDR3 RAM</span>
+        </div>
+      </Html>
+      <Html position={[84 / 4, 4, 0]}>
+        <div className="bg-red-600 rounded-full px-4 -translate-x-1/2 -translate-y-1/2 text-center whitespace-nowrap">
+          <span className="text-sm">Flash Storage</span>
+        </div>
+      </Html>
+      <Html position={[0, 6, 0]}>
+        <div className="bg-red-600 rounded-full px-4 -translate-x-1/2 -translate-y-1/2 text-center whitespace-nowrap">
+          <span className="text-sm">i.MX 6ULL</span>
+        </div>
+      </Html>
     </group>
   );
 }
@@ -197,8 +219,9 @@ function ThreeScene() {
       <OrbitControls
         enableZoom={false}
         enablePan={false}
+        enableRotate={false}
         autoRotate={true}
-        autoRotateSpeed={0.5}
+        autoRotateSpeed={1}
         minPolarAngle={Math.PI / 3}
         maxPolarAngle={Math.PI / 3}
       />
@@ -208,25 +231,29 @@ function ThreeScene() {
 
 export default function Home() {
   return (
-    <div className="bg-white text-black font-karla">
+    <>
       <Navbar />
 
-      <div className="pt-32">
-        <Container>
-          <Article>
-            <Header>project: cypher</Header>
-            <Paragraph>
-              In the last decade, the use of electronic gift cards has become
-              widespread in almost all stores. In addition to these, most of us
-              have a bank cards, which the average person uses four times a day.
-              The name of the project comes from the word "cipher".
-              The name refers to cryptography or encryption.
-              It refers to the security of the technologies used. That
-              with a single card we can enable the remote use of most of the
-              devices we use every day, while also solving a growing health
-              problem.
-            </Paragraph>
-
+      <div className="h-screen">
+        <ThreeScene />
+      </div>
+      <div className="-mt-[25vh] h-1/4">
+        <div className="container mx-auto px-8 flex flex-col space-y-4 h-full justify-center">
+          <Title>project: cypher</Title>
+          <Paragraph>
+            In the last decade, the use of electronic gift cards has become
+            widespread in almost all stores. In addition to these, most of us
+            have a bank cards, which the average person uses four times a day.
+            The name of the project comes from the word "cipher". The name
+            refers to cryptography or encryption. It refers to the security of
+            the technologies used. That with a single card we can enable the
+            remote use of most of the devices we use every day, while also
+            solving a growing health problem.
+            <p className="text-right italic">- scroll down for more</p>
+          </Paragraph>
+        </div>
+      </div>
+      <div className="container mx-auto px-8 pb-32 pt-8 flex flex-col space-y-4">
             <Title>problem</Title>
             <Paragraph>
               In our preliminary research, we observed that the size of people's
@@ -271,12 +298,7 @@ export default function Home() {
               problems over time, and in the longer term to less plastic waste,
               thus we can create a more conscious and simpler life.
             </Paragraph>
-          </Article>
-        </Container>
       </div>
-      <div className="w-full h-screen">
-        <ThreeScene />
-      </div>
-    </div>
+    </>
   );
 }
