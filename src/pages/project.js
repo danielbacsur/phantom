@@ -18,29 +18,39 @@ export function Model() {
         material={new THREE.MeshBasicMaterial({ color: 0x0, wireframe: true })}
         position={[-84 / 2, 0, 52 / 2]}
       />
-      <Html position={[84 / 2 + 10, 0, 0]}>
+      <Html position={[84 / 2 + 16, 0, 0]}>
         <div className="bg-red-600 rounded-full px-4 -translate-x-1/2 -translate-y-1/2 text-center whitespace-nowrap">
           <span className="text-sm">USB-C</span>
         </div>
       </Html>
-      <Html position={[-84 / 2 - 10, 0, 0]}>
+      <Html position={[-84 / 2 - 16, 0, 0]}>
         <div className="bg-red-600 rounded-full px-4 -translate-x-1/2 -translate-y-1/2 text-center whitespace-nowrap">
           <span className="text-sm">WiFi & BLE</span>
         </div>
       </Html>
-      <Html position={[-84 / 4, 4, 0]}>
+      <Html position={[-84 / 4, 16, 0]}>
         <div className="bg-red-600 rounded-full px-4 -translate-x-1/2 -translate-y-1/2 text-center whitespace-nowrap">
           <span className="text-sm">DDR3 RAM</span>
         </div>
       </Html>
-      <Html position={[84 / 4, 4, 0]}>
+      <Html position={[84 / 4, 16, 0]}>
         <div className="bg-red-600 rounded-full px-4 -translate-x-1/2 -translate-y-1/2 text-center whitespace-nowrap">
           <span className="text-sm">Flash Storage</span>
         </div>
       </Html>
-      <Html position={[0, 6, 0]}>
+      <Html position={[0, 16, 0]}>
         <div className="bg-red-600 rounded-full px-4 -translate-x-1/2 -translate-y-1/2 text-center whitespace-nowrap">
           <span className="text-sm">i.MX 6ULL</span>
+        </div>
+      </Html>
+      <Html position={[0, 0, 54/2+16]}>
+        <div className="bg-red-600 rounded-full px-4 -translate-x-1/2 -translate-y-1/2 text-center whitespace-nowrap">
+          <span className="text-sm">NFC</span>
+        </div>
+      </Html>
+      <Html position={[0, 0, -54/2-16]}>
+        <div className="bg-red-600 rounded-full px-4 -translate-x-1/2 -translate-y-1/2 text-center whitespace-nowrap">
+          <span className="text-sm">RFID</span>
         </div>
       </Html>
     </group>
