@@ -210,21 +210,21 @@ export default function Home() {
   return (
     <div className="bg-white text-black font-karla">
       <Navbar />
-      
+
       <div className="pt-32">
         <Container>
           <Article>
             <Header>project: cypher</Header>
             <Paragraph>
               In the last decade, the use of electronic gift cards has become
-              widespread in almost all stores. In addition to these, our wallets
-              are weighed down by bank cards, which the average person uses four
-              times a day. The name of the project comes from the English word
-              "cipher". Translated into Hungarian, it means cryptography or
-              encryption. The name refers to the security of the technologies
-              used. That with a single card we can enable the remote use of most
-              of the devices we use every day, while also solving a growing
-              health problem.
+              widespread in almost all stores. In addition to these, most of us
+              have a bank cards, which the average person uses four times a day.
+              The name of the project comes from the word "cipher".
+              The name refers to cryptography or encryption.
+              It refers to the security of the technologies used. That
+              with a single card we can enable the remote use of most of the
+              devices we use every day, while also solving a growing health
+              problem.
             </Paragraph>
 
             <Title>problem</Title>
@@ -277,6 +277,6 @@ export default function Home() {
       <div className="w-full h-screen">
         <ThreeScene />
       </div>
-    </div>  
+    </div>
   );
 }

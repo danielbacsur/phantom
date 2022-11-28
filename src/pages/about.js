@@ -29,10 +29,10 @@ const Post = () => {
               <span class="mt-8 text-lg font-bold font-lora">
                 {member.name}
               </span>
-              <p class="mt-2 text-xs text-gray-700 dark:text-gray-300">
+              <p class="mt-2 text-xs">
                 {member.role}
               </p>
-              <p class="mt-4 text-sm text-gray-700 dark:text-gray-300">{member.description}</p>
+              <p class="mt-4 text-sm">{member.description}</p>
             </div>
           ))}
         </div>

@@ -6,7 +6,7 @@ const Wrapper = ({ children }) => {
   const router = useRouter();
 
   return (
-    <div className="bg-white text-black font-karla">
+    <div className="h-screen bg-white text-black font-karla">
       <Navbar />
       <div className="w-full min-h-[calc(100vh-8rem)] pt-32">{children}</div>
       {/* <Footer /> */}
