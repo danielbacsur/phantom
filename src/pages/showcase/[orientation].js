@@ -53,34 +53,61 @@ const Slide = () => {
   }, [router.query.orientation]);
 
   return (
-    <div className="w-screen h-screen overflow-x-hidden bg-[#ffsbf40]">
+    <div className="w-screen overflow-hidden bg-[#xffbf40]">
       <div
         className={classNames(
-          "transition-all duration-500 relative",
+          "transition-all duration-500 relative h-screen overflow-hidden",
           { "-ml-[100vw]": orientation === "right" },
           { "-mr-[100vw]": orientation === "left" }
         )}
       >
         {/* TOP LEFT */}
-        <div className="absolute top-12 left-12">
+        <div className="absolute top-24 left-24">
           <div className="space-y-8">
-            <span className="font-display text-[64px] leading-[1]">PHANTOM</span>
+            <span className="font-display text-[64px] leading-[1]">
+              A_PHANTOM_CSAPATA
+            </span>
 
-            <div className="text-[16px]">
+            <div className="-ml-12 text-[12px]">
               <b>Bacsur Dániel & Mikó Erik</b>
               <p>Közgazdasági Politechnikum</p>
               <b>—</b>
             </div>
+          </div>
+        </div>
+
+        <img className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-cover w-1/3" src="/nyan.jpg" />
+
+        {/* BOTTOM LEFT */}
+        <div className="absolute bottom-24 left-24">
+          <div className="space-y-8">
+            
+            <span className="font-display text-[240px] leading-[1]">
+              CYPHER
+            </span>
 
           </div>
         </div>
 
-        {/* BOTTOM CENTER */}
-        <div className="absolute bottom-12 mx-auto left-0 right-0 text-center">
-          <span className="font-display">THE SUMMIT OF THE MANY</span>
+        <div className="absolute bottom-24 right-24">
+          <div className="space-y-8">
+            <span className="font-display text-[240px] leading-[1]">
+              _ALPHA
+            </span>
+
+          </div>
         </div>
 
-        <div className="w-full h-screen p-10 flex flex-col">
+        <div className="absolute top-24 right-24">
+          <div className="space-y-8">
+            <span className="font-display text-[64px] leading-[1]">
+              32. OTIO
+            </span>
+
+          </div>
+        </div>
+
+        {/* <div className="w-full h-screen p-10 flex flex-col">
           <div
             style={{
               width: "100%",
@@ -132,46 +159,7 @@ const Slide = () => {
               DRAG POINTER &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ●
             </p>
           </div>
-          <div
-            className="full"
-            style={{
-              fontFamily: "'Antonio', sans-serif",
-              width: "100%",
-              flex: "1 1 0%",
-              padding: 0,
-              display: "inline-flex",
-              flexDirection: "row",
-              alignItems: "flex-end",
-              justifyContent: "center",
-            }}
-          >
-            <p
-              style={{
-                flex: "1 1 0%",
-                fontSize: 250,
-                lineHeight: "1em",
-                color: "black",
-                margin: 0,
-                letterSpacing: -10,
-              }}
-            >
-              CYPHER
-            </p>
-            <div style={{ width: 10 }} />
-            <p
-              style={{
-                flex: "1 1 0%",
-                fontSize: 250,
-                lineHeight: "100%",
-                textAlign: "right",
-                color: "black",
-                margin: 0,
-                letterSpacing: -10,
-              }}
-            >
-              _01
-            </p>
-          </div>
+          
           <div style={{ height: 60 }} />
           <div
             style={{
@@ -200,7 +188,7 @@ const Slide = () => {
               Pythagorean Mathematics
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
