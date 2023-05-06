@@ -1,8 +1,7 @@
 import { useRouter } from "next/router";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { initializeApp } from "firebase/app";
 import { getFirestore, doc, updateDoc, onSnapshot } from "firebase/firestore";
-
 import classNames from "classnames";
 
 const firebase = initializeApp({
@@ -40,7 +39,6 @@ const Slide = () => {
       });
       console.warn("UPDATE");
     };
-    visibilityEvent();
 
     // window.addEventListener("load", visibilityEvent);
     window.addEventListener("visibilitychange", visibilityEvent);
@@ -52,6 +50,43 @@ const Slide = () => {
     };
   }, [router.query.orientation]);
 
+  const Overlay = () => {
+    return (
+      <>
+        <div className="absolute top-24 left-24">
+          <div className="space-y-8">
+            <span className="font-display text-[64px] leading-[1]">
+              A_PHANTOM_CSAPATA
+            </span>
+
+            <div className="-ml-12 text-[14px]">
+              <b>Bacsur Dániel & Mikó Erik</b>
+              <p>Közgazdasági Politechnikum</p>
+              <b>—</b>
+            </div>
+          </div>
+        </div>
+        <div className="absolute top-24 right-24">
+          <span className="font-display text-[64px] leading-[1]">32. OTIO</span>
+        </div>
+        <div className="absolute bottom-24 left-24">
+          <div className="space-y-8">
+            <span className="font-display text-[240px] leading-[1]">
+              CYPHER
+            </span>
+          </div>
+        </div>
+        <div className="absolute bottom-24 right-24">
+          <div className="space-y-8">
+            <span className="font-display text-[240px] leading-[1]">
+              _ALPHA
+            </span>
+          </div>
+        </div>
+      </>
+    );
+  };
+
   return (
     <div className="w-screen overflow-hidden bg-[#xffbf40]">
       <div
@@ -61,51 +96,7 @@ const Slide = () => {
           { "-mr-[100vw]": orientation === "left" }
         )}
       >
-        {/* TOP LEFT */}
-        <div className="absolute top-24 left-24">
-          <div className="space-y-8">
-            <span className="font-display text-[64px] leading-[1]">
-              A_PHANTOM_CSAPATA
-            </span>
-
-            <div className="-ml-12 text-[12px]">
-              <b>Bacsur Dániel & Mikó Erik</b>
-              <p>Közgazdasági Politechnikum</p>
-              <b>—</b>
-            </div>
-          </div>
-        </div>
-
-        <img className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-cover w-1/3" src="/nyan.jpg" />
-
-        {/* BOTTOM LEFT */}
-        <div className="absolute bottom-24 left-24">
-          <div className="space-y-8">
-            
-            <span className="font-display text-[240px] leading-[1]">
-              CYPHER
-            </span>
-
-          </div>
-        </div>
-
-        <div className="absolute bottom-24 right-24">
-          <div className="space-y-8">
-            <span className="font-display text-[240px] leading-[1]">
-              _ALPHA
-            </span>
-
-          </div>
-        </div>
-
-        <div className="absolute top-24 right-24">
-          <div className="space-y-8">
-            <span className="font-display text-[64px] leading-[1]">
-              32. OTIO
-            </span>
-
-          </div>
-        </div>
+        <Overlay />
 
         {/* <div className="w-full h-screen p-10 flex flex-col">
           <div
