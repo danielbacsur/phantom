@@ -39,7 +39,7 @@ const Slide = () => {
       });
       console.warn("UPDATE");
     };
-
+    visibilityEvent();
     // window.addEventListener("load", visibilityEvent);
     window.addEventListener("visibilitychange", visibilityEvent);
     // window.addEventListener("onunload", visibilityEvent);
