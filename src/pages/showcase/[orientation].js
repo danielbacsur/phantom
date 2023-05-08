@@ -5,7 +5,7 @@ import { getFirestore, doc, updateDoc, onSnapshot } from "firebase/firestore";
 import classNames from "classnames";
 
 import { RGBELoader } from "three-stdlib";
-import { Canvas, useLoader } from "@react-three/fiber";
+import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import {
   Center,
   Text3D,
@@ -19,6 +19,7 @@ import {
   MeshTransmissionMaterial,
 } from "@react-three/drei";
 import { useControls, button } from "leva";
+import { Vector3 } from "three";
 
 const firebase = initializeApp({
   apiKey: "AIzaSyBA_A3vj35toMz8SDoQA7jmQY6UwvdoNu4",
@@ -38,6 +39,7 @@ const Slide = () => {
   const { autoRotate, text, shadow, ...config } = useControls({
     text: "Inter",
     backside: true,
+    animStage: false,
     backsideThickness: { value: 0.3, min: 0, max: 2 },
     samples: { value: 16, min: 1, max: 32, step: 1 },
     resolution: { value: 1024, min: 64, max: 2048, step: 64 },
@@ -149,8 +151,6 @@ const Slide = () => {
       >
         <Overlay />
 
-        
-
         <div className="absolute top-0 bottom-0 left-0 right-0 -z-10">
           <Canvas
             shadows
@@ -166,7 +166,7 @@ const Slide = () => {
             >
               {text}
             </Text>
-            <OrbitControls
+            {/* <OrbitControls
               autoRotate
               autoRotateSpeed={0.5}
               zoomSpeed={0.25}
@@ -176,7 +176,7 @@ const Slide = () => {
               dampingFactor={0.05}
               minPolarAngle={Math.PI / 3}
               maxPolarAngle={Math.PI / 3}
-            />
+            /> */}
             <Environment resolution={32}>
               <group rotation={[-Math.PI / 4, -0.3, 0]}>
                 <Lightformer
@@ -233,6 +233,7 @@ const Slide = () => {
                 bias={0.0001}
               />
             </AccumulativeShadows>
+            <Rig />
           </Canvas>
         </div>
 
@@ -322,6 +323,20 @@ const Slide = () => {
     </div>
   );
 };
+
+function Rig() {
+  const { camera } = useThree();
+
+  return useFrame(() => {
+    const time = new Date().getTime() / 10000;
+
+    camera.position.lerp(
+      new Vector3(Math.sin(time) * 20, 20, Math.cos(time) * 20),
+      0.05
+    );
+    camera.lookAt(0, 0, 0);
+  });
+}
 
 const Grid = ({ number = 23, lineWidth = 0.026, height = 0.5 }) => (
   <Instances position={[0, -1.02, 0]}>
