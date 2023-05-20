@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import "../styles/globals.css";
 
-function MyApp({ Component, pageProps }) {
+const App = ({ Component, pageProps }) => {
   useEffect(() => {
     const setter = () => {
       document.documentElement.style.setProperty(
@@ -19,6 +19,6 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   return <Component {...pageProps} />;
-}
+};
 
-export default MyApp;
+export default App;
