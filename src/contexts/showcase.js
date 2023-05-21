@@ -2,6 +2,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 import { initializeApp } from "firebase/app";
 import { getFirestore, doc, updateDoc, onSnapshot } from "firebase/firestore";
+import { useRouter } from "next/router";
+import classNames from "classnames";
 
 const ShowcaseContext = createContext();
 export const useShowcase = () => useContext(ShowcaseContext);
@@ -61,6 +63,34 @@ const ShowcaseProvider = ({ children }) => {
     }
   };
 
+
+
+  const router = useRouter();
+
+  const [orientation, setOrientation] = useState("center");
+  useEffect(() => {
+    return onSnapshot(doc(database, "showcase", "visibility"), (doc) => {
+      const { left, right } = doc.data();
+      setOrientation(left && right ? router.query.orientation : "center");
+      console.warn("READ");
+    });
+  });
+  useEffect(() => {
+    const visibilityEvent = async () => {
+      await updateDoc(doc(database, "showcase", "visibility"), {
+        [router.query.orientation]:
+          document.visibilityState === "visible" ? true : false,
+      });
+      console.warn("UPDATE");
+    };
+    visibilityEvent();
+    window.addEventListener("visibilitychange", visibilityEvent);
+    return () =>
+      window.removeEventListener("visibilitychange", visibilityEvent);
+  }, [router.query.orientation]);
+
+
+
   return (
     <ShowcaseContext.Provider
       value={{
@@ -72,7 +102,17 @@ const ShowcaseProvider = ({ children }) => {
         mirror,
       }}
     >
-      {children}
+      <div className="w-screen overflow-hidden">
+      <div
+        className={classNames(
+          "h-screen relative transition-all duration-500 ",
+          { "-ml-[100vw]": orientation === "right" },
+          { "-mr-[100vw]": orientation === "left" }
+        )}
+      >
+        {children}
+      </div>
+    </div>
     </ShowcaseContext.Provider>
   );
 };
