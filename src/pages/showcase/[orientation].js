@@ -1,16 +1,12 @@
+import { Banner, Background, Visualization } from "components/showcase";
 import ShowcaseProvider from "contexts/showcase";
-import {
-  Banner,
-  Overlay,
-  ShowcaseWrapper,
-  Visualization,
-} from "components/showcase";
 
 const Showcase = () => (
   <ShowcaseProvider>
-    <Banner />
-    {/* <Overlay /> */}
-    <Visualization />
+    {/* OVERLAY */}
+    <Background>
+      <Visualization />
+    </Background>
   </ShowcaseProvider>
 );
 

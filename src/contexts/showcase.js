@@ -4,6 +4,8 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, doc, updateDoc, onSnapshot } from "firebase/firestore";
 import { useRouter } from "next/router";
 import classNames from "classnames";
+import { useSpring } from "@react-spring/core";
+import { animated } from "@react-spring/web";
 
 const ShowcaseContext = createContext();
 export const useShowcase = () => useContext(ShowcaseContext);
@@ -55,16 +57,6 @@ const ShowcaseProvider = ({ children }) => {
     );
   }, []);
 
-  const mirror = async (orientation, state) => {
-    if (orientation == "right" || orientation == "left") {
-      await updateDoc(doc(database, "showcase", "visibility"), {
-        [orientation]: state === "visible" ? true : false,
-      });
-    }
-  };
-
-
-
   const router = useRouter();
 
   const [orientation, setOrientation] = useState("center");
@@ -89,30 +81,25 @@ const ShowcaseProvider = ({ children }) => {
       window.removeEventListener("visibilitychange", visibilityEvent);
   }, [router.query.orientation]);
 
-
+  const scenes = {
+    0: { canvas: { style: { backgroundColor: "black" } } },
+    1: { canvas: { style: { backgroundColor: "red" } } },
+    2: { canvas: { style: { backgroundColor: "green" } } },
+  };
 
   return (
-    <ShowcaseContext.Provider
-      value={{
-        appcontrol,
-        distancing,
-        gitcontrol,
-        visibility,
-        scene,
-        mirror,
-      }}
-    >
+    <ShowcaseContext.Provider value={{ scene: scenes[scene.index] }}>
       <div className="w-screen overflow-hidden">
-      <div
-        className={classNames(
-          "h-screen relative transition-all duration-500 ",
-          { "-ml-[100vw]": orientation === "right" },
-          { "-mr-[100vw]": orientation === "left" }
-        )}
-      >
-        {children}
+        <div
+          className={classNames(
+            "h-screen relative transition-all duration-500",
+            { "-ml-[100vw]": orientation === "right" },
+            { "-mr-[100vw]": orientation === "left" }
+          )}
+        >
+          {children}
+        </div>
       </div>
-    </div>
     </ShowcaseContext.Provider>
   );
 };
