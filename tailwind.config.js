@@ -2,10 +2,6 @@
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
-    fontFamily: {
-      'sans': ['Inter', 'sans-serif'],
-      'display': ['Antonio', 'sans-serif'],
-    },
     extend: {
       height: {
         screen: "calc(var(--vh))",

@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import "../styles/globals.css";
+import "styles/globals.css";
 
-const App = ({ Component, pageProps }) => {
+const MyApp = ({ Component, pageProps }) => {
   useEffect(() => {
-    const setter = () => {
+    const resize = () => {
       document.documentElement.style.setProperty(
         "--vh",
         `${window.innerHeight}px`
@@ -13,12 +13,12 @@ const App = ({ Component, pageProps }) => {
         `${document.body.offsetWidth}px`
       );
     };
-    setter();
-    window.addEventListener("resize", setter);
-    return () => window.removeEventListener("resize", setter);
+    resize();
+    window.addEventListener("resize", resize);
+    return () => window.removeEventListener("resize", resize);
   }, []);
 
   return <Component {...pageProps} />;
 };
 
-export default App;
+export default MyApp;

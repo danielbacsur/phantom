@@ -1,7 +1,7 @@
 import Overlay from "./Overlay";
 import Visualization from "./Visualization";
-import Banner from "./Banner";
-import Layout from "./Layout";
-import ShowcaseWrapper from "./ShowcaseWrapper";
-import Background from "./Visualization/Background";
-export { Background, Overlay, Visualization, Banner, Layout, ShowcaseWrapper };
+import Background from "./Background";
+import Character from "./Character";
+import Cypher from "./Cypher";
+
+export { Overlay, Visualization, Background, Character, Cypher };

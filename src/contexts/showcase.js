@@ -1,13 +1,12 @@
-import { createContext, useContext, useEffect, useState } from "react";
-
-import { initializeApp } from "firebase/app";
 import { getFirestore, doc, updateDoc, onSnapshot } from "firebase/firestore";
-import { useRouter } from "next/router";
-import classNames from "classnames";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useSpring } from "@react-spring/core";
+import { initializeApp } from "firebase/app";
 import { animated } from "@react-spring/web";
+import { useRouter } from "next/router";
+import { useControls } from "leva";
 
-const ShowcaseContext = createContext();
+export const ShowcaseContext = createContext();
 export const useShowcase = () => useContext(ShowcaseContext);
 
 const ShowcaseProvider = ({ children }) => {
@@ -87,15 +86,21 @@ const ShowcaseProvider = ({ children }) => {
     2: { canvas: { style: { backgroundColor: "green" } } },
   };
 
+  const controls = useControls({
+    background: "white",
+    distance: {min:1, max: 8, step: 1, value: 4},
+    scene: {min:0, max: 2, step: 1, value: 0}
+  });
+
   return (
-    <ShowcaseContext.Provider value={{ scene: scenes[scene.index] }}>
+    <ShowcaseContext.Provider value={controls}>
       <div className="w-screen overflow-hidden">
         <div
-          className={classNames(
-            "h-screen relative transition-all duration-500",
-            { "-ml-[100vw]": orientation === "right" },
-            { "-mr-[100vw]": orientation === "left" }
-          )}
+          className="h-screen relative transition-all duration-500"
+          style={{
+            marginLeft: orientation === "right" ? "calc(-1 * var(--vw))" : "0",
+            marginRight: orientation === "left" ? "calc(-1 * var(--vw))" : "0",
+          }}
         >
           {children}
         </div>

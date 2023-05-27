@@ -1,43 +1,125 @@
-import React from 'react'
-import { a } from '@react-spring/web'
+import * as THREE from "three";
+import { useEffect, useRef, useState } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useIntersect, Image, Box, Html } from "@react-three/drei";
+import { ScrollControls, Scroll } from "contexts/scroll";
 
-export default function Overlay({ fill }) {
-  // Just a Figma export, the fill is animated
+function Item({ url, scale, ...props }) {
+  const visible = useRef(false);
+  const ref = useIntersect((isVisible) => (visible.current = isVisible));
+  const [hovered, hover] = useState(false);
+  const { height } = useThree((state) => state.viewport);
+  useFrame((state, delta) => {
+    ref.current.position.y = THREE.MathUtils.damp(
+      ref.current.position.y,
+      visible.current ? 0 : -height / 2 + 1,
+      4,
+      delta
+    );
+    ref.current.material.zoom = THREE.MathUtils.damp(
+      ref.current.material.zoom,
+      visible.current ? 1 : 1.5,
+      4,
+      delta
+    );
+    ref.current.material.grayscale = THREE.MathUtils.damp(
+      ref.current.material.grayscale,
+      hovered ? 0 : 1,
+      4,
+      delta
+    );
+  });
   return (
-    <div className="overlay">
-      <a.svg viewBox="0 0 583 720" fill={fill} xmlns="http://www.w3.org/2000/svg">
-        <path fill="#E8B059" d="M50.5 61h9v9h-9zM50.5 50.5h9v9h-9zM40 50.5h9v9h-9z" />
-        <path fillRule="evenodd" clipRule="evenodd" d="M61 40H50.5v9H61v10.5h9V40h-9z" fill="#E8B059" />
-        <text style={{ whiteSpace: 'pre' }} fontFamily="Inter" fontSize={6} fontWeight="bold" letterSpacing="-.02em">
-          <tspan x={328} y={46.182} children="08/01/21" />
-        </text>
-        <text style={{ whiteSpace: 'pre' }} fontFamily="Inter" fontSize={6} fontWeight="bold" letterSpacing="-.02em">
-          <tspan x={392} y={46.182} children="SECRET " />
-          <tspan x={392} y={54.182} children="TEACHINGS " />
-          <tspan x={392} y={62.182} children="OF ALL AGES" />
-        </text>
-        <text style={{ whiteSpace: 'pre' }} fontFamily="Inter" fontSize={10.5} fontWeight={500} letterSpacing="0em">
-          <tspan x={40} y={175.318} children="MODUS OPERANDI " />
-          <tspan x={40} y={188.318} children="FOR THE INVOCATION OF SPIRITS" />
-        </text>
-        <text fill="#E8B059" style={{ whiteSpace: 'pre' }} fontFamily="Inter" fontSize={52} fontWeight="bold" letterSpacing="0em">
-          <tspan x={40} y={257.909} children={'The Invocation \u2014'} />
-        </text>
-        <text style={{ whiteSpace: 'pre' }} fontFamily="Inter" fontSize={12} fontWeight="bold" letterSpacing="0em">
-          <tspan x={40} y={270.909} />
-        </text>
-        <text style={{ whiteSpace: 'pre' }} fontFamily="Inter" fontSize={48} fontWeight="bold" letterSpacing="0em">
-          <tspan x={40} y={321.909} children="Behold the sign and " />
-          <tspan x={40} y={372.909} children="the very Hallowed " />
-          <tspan x={40} y={423.909} children="Names of God full of " />
-          <tspan x={40} y={474.909} children="power. Obey the " />
-          <tspan x={40} y={525.909} children="power of this our " />
-          <tspan x={40} y={576.909} children="pentacle;" />
-        </text>
-        <text style={{ whiteSpace: 'pre' }} fontFamily="Inter" fontSize={10.5} fontWeight={500} letterSpacing="0em">
-          <tspan x={326} y={640.318} children="The Complete Book of Magic Science" />
-        </text>
-      </a.svg>
-    </div>
-  )
+    <group {...props}>
+      <Image
+        ref={ref}
+        onPointerOver={() => hover(true)}
+        onPointerOut={() => hover(false)}
+        scale={scale}
+        url={url}
+      />
+    </group>
+  );
 }
+
+function Items() {
+  const { width: w, height: h } = useThree((state) => state.viewport);
+  return (
+    <Scroll>
+      <Item url="/1.jpg" scale={[w / 3, w / 3, 1]} position={[-w / 6, 0, 0]} />
+      <Item url="/2.jpg" scale={[2, w / 3, 1]} position={[w / 30, -h, 0]} />
+      <Item
+        url="/3.jpg"
+        scale={[w / 3, w / 5, 1]}
+        position={[-w / 4, -h * 1, 0]}
+      />
+      <Item
+        url="/4.jpg"
+        scale={[w / 5, w / 5, 1]}
+        position={[w / 4, -h * 1.2, 0]}
+      />
+      <Item
+        url="/5.jpg"
+        scale={[w / 5, w / 5, 1]}
+        position={[w / 10, -h * 1.75, 0]}
+      />
+      <Item
+        url="/6.jpg"
+        scale={[w / 3, w / 3, 1]}
+        position={[-w / 4, -h * 2, 0]}
+      />
+      <Item
+        url="/7.jpg"
+        scale={[w / 3, w / 5, 1]}
+        position={[-w / 4, -h * 2.6, 0]}
+      />
+      <Item
+        url="/8.jpg"
+        scale={[w / 2, w / 2, 1]}
+        position={[w / 4, -h * 3.1, 0]}
+      />
+      <Item
+        url="/12.jpg"
+        scale={[w / 2.5, w / 2, 1]}
+        position={[-w / 6, -h * 4.1, 0]}
+      />
+    </Scroll>
+  );
+}
+
+const Titles = () => {
+  return (
+    <Scroll html>
+      {[...Array(3)].map((_, i) => (
+        <div key={i} style={{ marginTop: `-${i === 0 ? 300 : 0}vh` }}>
+          <div className="h-screen relative">1</div>
+          <div className="h-screen relative">2</div>
+          <div className="h-screen relative">3</div>
+        </div>
+      ))}
+    </Scroll>
+  );
+};
+
+const Test = () => (
+  <Canvas
+    orthographic
+    camera={{ zoom: 80 }}
+    // gl={{ alpha: true, antialias: false, stencil: false, depth: false }}
+    dpr={[1, 1.5]}
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+      zIndex: 999,
+    }}
+  >
+    <ScrollControls damping={0.2} pages={4} infinite>
+      <Items />
+      <Titles />
+    </ScrollControls>
+  </Canvas>
+);
+export default Test;

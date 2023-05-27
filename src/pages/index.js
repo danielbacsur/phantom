@@ -1,5 +1,5 @@
-export default function Home() {
-  return (
-    <div className='bg-black text-red-500'>Alma</div>
-  )
-}
+const Index = () => {
+  return <div>Hello World</div>;
+};
+
+export default Index;

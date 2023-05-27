@@ -1,13 +1,14 @@
-import { Banner, Background, Visualization } from "components/showcase";
+import { Background, Overlay, Visualization } from "components/showcase";
 import ShowcaseProvider from "contexts/showcase";
 
-const Showcase = () => (
-  <ShowcaseProvider>
-    {/* OVERLAY */}
-    <Background>
+const Showcase = () => {
+  return (
+    <ShowcaseProvider>
+      <Overlay />
       <Visualization />
-    </Background>
-  </ShowcaseProvider>
-);
+      <Background />
+    </ShowcaseProvider>
+  );
+};
 
 export default Showcase;
