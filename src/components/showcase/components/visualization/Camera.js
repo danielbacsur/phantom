@@ -12,7 +12,7 @@ const Camera = () => {
   const showcase = useShowcase();
 
   useFrame((_, delta) => {
-    const time = new Date().getTime() / 10000;
+    const time = new Date().getTime() / 30000 * Math.PI;
 
     if (showcase.scene === 0 || showcase.scene === 4) {
       cameraControlsRef.current?.setLookAt(
