@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    @font-face {
+      font-family: "Ki Medium";
+      font-weight: 400;
+      src: url("/fonts/ki-medium.ttf")
+    }
+}

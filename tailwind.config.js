@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
+      fontFamily: {
+        'mono': ['Ki Medium', 'monospace']
+      },
       height: {
         screen: "calc(var(--vh))",
       },

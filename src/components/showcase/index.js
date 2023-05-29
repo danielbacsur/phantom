@@ -1,7 +1,3 @@
-import Overlay from "./Overlay";
-import Visualization from "./Visualization";
-import Background from "./Background";
-import Character from "./Character";
-import Cypher from "./Cypher";
-
-export { Overlay, Visualization, Background, Character, Cypher };
+export { default as Debugger } from "./Debugger";
+export { default as Overlay } from "./Overlay";
+export { default as Visualization } from "./Visualization";

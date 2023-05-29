@@ -1,15 +1,143 @@
 import * as THREE from "three";
 import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useIntersect, Image, Box, Html } from "@react-three/drei";
-import { ScrollControls, Scroll } from "contexts/scroll";
+import { useIntersect, Image, Box, Html, Text } from "@react-three/drei";
+import { ScrollControls, Scroll, useScroll } from "contexts/scroll";
+import { useShowcase } from "contexts/showcase";
+import { useSpring, useSpringRef } from "@react-spring/core";
+import { animated } from "@react-spring/three";
+import {  } from "maath/three";
+import { lerp } from "maath/misc";
+
+const Overlay = () => {
+  const [color, setColor] = useState("transparent");
+
+  return (
+    <Canvas
+      orthographic
+      camera={{ zoom: 80 }}
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+        zIndex: 999,
+        backgroundColor: color,
+      }}
+    >
+      <ScrollControls damping={0.25} pages={9}>
+        <HtmlContainer />
+        <ThreeContainer />
+        <BG />
+
+        <ScrollController setColor={setColor} />
+      </ScrollControls>
+    </Canvas>
+  );
+};
+
+const BG = () => {
+  useFrame((state, _) => {
+    state.gl.setClearColor("white");
+  });
+};
+
+const ThreeContainer = () => {
+  const { width, height } = useThree((state) => state.viewport);
+  return (
+    <Scroll>
+      <Item
+        url="/1.jpg"
+        scale={[width / 6, height / 2, 1]}
+        position={[-width / 3, -height * 4, 0]}
+      />
+      <Item
+        url="/2.jpg"
+        scale={[width / 6, height / 2, 1]}
+        position={[width / 3, -height * 4, 0]}
+      />
+      <Item
+        url="/3.jpg"
+        scale={[width / 6, height / 2, 1]}
+        position={[-width / 3, -height * 5, 0]}
+      />
+      <Item
+        url="/4.jpg"
+        scale={[width / 6, height / 2, 1]}
+        position={[width / 3, -height * 5, 0]}
+      />
+      <Item
+        url="/5.jpg"
+        scale={[width / 6, height / 2, 1]}
+        position={[-width / 3, -height * 6, 0]}
+      />
+      <Item
+        url="/6.jpg"
+        scale={[width / 6, height / 2, 1]}
+        position={[width / 3, -height * 6, 0]}
+      />
+      <Item
+        url="/7.jpg"
+        scale={[width / 6, height / 2, 1]}
+        position={[-width / 3, -height * 7, 0]}
+      />
+      <Item
+        url="/8.jpg"
+        scale={[width / 6, height / 2, 1]}
+        position={[width / 3, -height * 7, 0]}
+      />
+    </Scroll>
+  );
+};
+
+const HtmlContainer = () => {
+  const { distance } = useShowcase();
+  return (
+    <Scroll html>
+      {[...Array(3)].map((_, i) => (
+        <div key={i} style={{ marginTop: `-${i === 0 ? 800 : 0}vh` }}>
+          <div className="h-screen grid place-items-center text-[7vw] font-mono grid-cols-3">
+            <span className="col-span-1">cypher</span>
+            <span className="col-span-1" />
+            <span className="col-span-1">alpha</span>
+          </div>
+          <div className="h-screen grid place-items-center text-[5vw] font-mono relative">
+            COMPONENTS
+          </div>
+          <div className="h-screen grid place-items-center text-[5vw] font-mono relative">
+            <div className="absolute bottom-[5vw] left-[7vw]">
+              {distance.toFixed(2)}
+              <span className="text-[3vw]"> m</span>
+            </div>
+          </div>
+          <div className="h-screen grid place-items-center text-[5vw] font-mono relative">
+            LOCKDOWN
+          </div>
+
+          <div className="h-screen grid place-items-center text-[3vw] font-mono">
+            .sch
+          </div>
+          <div className="h-screen grid place-items-center text-[3vw] font-mono">
+            .brd
+          </div>
+          <div className="h-screen grid place-items-center text-[3vw] font-mono">
+            forrasztás
+          </div>
+          <div className="h-screen grid place-items-center text-[3vw] font-mono">
+            ..100%
+          </div>
+        </div>
+      ))}
+    </Scroll>
+  );
+};
 
 function Item({ url, scale, ...props }) {
   const visible = useRef(false);
   const ref = useIntersect((isVisible) => (visible.current = isVisible));
-  const [hovered, hover] = useState(false);
   const { height } = useThree((state) => state.viewport);
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     ref.current.position.y = THREE.MathUtils.damp(
       ref.current.position.y,
       visible.current ? 0 : -height / 2 + 1,
@@ -24,102 +152,68 @@ function Item({ url, scale, ...props }) {
     );
     ref.current.material.grayscale = THREE.MathUtils.damp(
       ref.current.material.grayscale,
-      hovered ? 0 : 1,
-      4,
+      visible.current ? 0 : 1,
+      1,
       delta
     );
   });
   return (
     <group {...props}>
-      <Image
-        ref={ref}
-        onPointerOver={() => hover(true)}
-        onPointerOut={() => hover(false)}
-        scale={scale}
-        url={url}
-      />
+      <Image ref={ref} scale={scale} url={url} />
     </group>
   );
 }
 
-function Items() {
-  const { width: w, height: h } = useThree((state) => state.viewport);
-  return (
-    <Scroll>
-      <Item url="/1.jpg" scale={[w / 3, w / 3, 1]} position={[-w / 6, 0, 0]} />
-      <Item url="/2.jpg" scale={[2, w / 3, 1]} position={[w / 30, -h, 0]} />
-      <Item
-        url="/3.jpg"
-        scale={[w / 3, w / 5, 1]}
-        position={[-w / 4, -h * 1, 0]}
-      />
-      <Item
-        url="/4.jpg"
-        scale={[w / 5, w / 5, 1]}
-        position={[w / 4, -h * 1.2, 0]}
-      />
-      <Item
-        url="/5.jpg"
-        scale={[w / 5, w / 5, 1]}
-        position={[w / 10, -h * 1.75, 0]}
-      />
-      <Item
-        url="/6.jpg"
-        scale={[w / 3, w / 3, 1]}
-        position={[-w / 4, -h * 2, 0]}
-      />
-      <Item
-        url="/7.jpg"
-        scale={[w / 3, w / 5, 1]}
-        position={[-w / 4, -h * 2.6, 0]}
-      />
-      <Item
-        url="/8.jpg"
-        scale={[w / 2, w / 2, 1]}
-        position={[w / 4, -h * 3.1, 0]}
-      />
-      <Item
-        url="/12.jpg"
-        scale={[w / 2.5, w / 2, 1]}
-        position={[-w / 6, -h * 4.1, 0]}
-      />
-    </Scroll>
-  );
-}
+const ScrollController = () => {
+  const { scroll, getScroll, setScroll } = useScroll();
+  const { scene, set } = useShowcase();
+  const [last, setLast] = useState(2);
+  const [time, setTime] = useState(0);
 
-const Titles = () => {
-  return (
-    <Scroll html>
-      {[...Array(3)].map((_, i) => (
-        <div key={i} style={{ marginTop: `-${i === 0 ? 300 : 0}vh` }}>
-          <div className="h-screen relative">1</div>
-          <div className="h-screen relative">2</div>
-          <div className="h-screen relative">3</div>
-        </div>
-      ))}
-    </Scroll>
-  );
+  const [alpha, setAlpha] = useState(0);
+  const [a, sA] = useState(0)
+
+  useFrame((state, delta) => {
+    if (scene === 5) return;
+
+    if (scene !== last) {
+      scroll(scene);
+      setLast(scene);
+      setTime(new Date().getTime());
+    }
+
+    if (scene === 4) {
+      const rem = new Date().getTime() - time;
+      const asp = rem / 60000;
+      if (Math.abs(getScroll()) <= 8) {
+        scroll(THREE.MathUtils.lerp(4, 8, asp));
+        console.log(getScroll());
+        setAlpha(1)
+      } else {
+
+        set({ scene: 0 });
+        setScroll(0);
+        setAlpha(0)
+
+      }
+      // setColor
+      // scroll(
+      //   THREE.MathUtils.lerp(
+
+      //   )
+      // )
+    }
+    else {
+      setAlpha(0)
+    }
+
+    sA(lerp(a, alpha, 4 * delta))
+    console.log(a)
+    state.gl.setClearAlpha(
+      a
+      // damp(state.gl.getClearAlpha(), 0, 3, delta)
+    );
+  });
 };
 
-const Test = () => (
-  <Canvas
-    orthographic
-    camera={{ zoom: 80 }}
-    // gl={{ alpha: true, antialias: false, stencil: false, depth: false }}
-    dpr={[1, 1.5]}
-    style={{
-      position: "absolute",
-      top: 0,
-      left: 0,
-      bottom: 0,
-      right: 0,
-      zIndex: 999,
-    }}
-  >
-    <ScrollControls damping={0.2} pages={4} infinite>
-      <Items />
-      <Titles />
-    </ScrollControls>
-  </Canvas>
-);
-export default Test;
+export default Overlay;
