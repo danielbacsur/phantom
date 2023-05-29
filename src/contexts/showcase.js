@@ -1,5 +1,5 @@
 import { getFirestore, doc, updateDoc, onSnapshot } from "firebase/firestore";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { initializeApp } from "firebase/app";
 import { useRouter } from "next/router";
 import { useControls } from "leva";
@@ -17,7 +17,7 @@ const ShowcaseProvider = ({ children }) => {
     mirror: { label: "Mirror", value: 0, min: -1, max: 1, step: 1 },
     locked: { label: "Locked", value: 0, min: 0, max: 1, step: 1 },
     scene: { label: "Scene", value: 0, min: 0, max: 5, step: 1 },
-    distance: { label: "Distance", value: 2, min: 2, max: 8, step: 0.01 },
+    distance: { label: "Distance", value: 6, min: 1, max: 6 },
   }));
 
   useEffect(() => {
@@ -75,8 +75,14 @@ const ShowcaseProvider = ({ children }) => {
       window.removeEventListener("visibilitychange", visibilityEvent);
   }, [router.query.orientation]);
 
+  const feedback = async (props) => {
+    (async () => {
+      await updateDoc(doc(database, "showcase", "feedback"), props);
+    })();
+  };
+
   return (
-    <ShowcaseContext.Provider value={{...controls, set: setControls}}>
+    <ShowcaseContext.Provider value={{ ...controls, set: setControls, feedback }}>
       <div className="w-screen overflow-hidden">
         <div
           className="h-screen relative transition-all duration-500"

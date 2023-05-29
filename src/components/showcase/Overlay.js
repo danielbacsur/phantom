@@ -8,9 +8,9 @@ import { useSpring, useSpringRef } from "@react-spring/core";
 import { animated } from "@react-spring/three";
 import {  } from "maath/three";
 import { lerp } from "maath/misc";
+import { useVisualization } from "contexts/visualization";
 
 const Overlay = () => {
-  const [color, setColor] = useState("transparent");
 
   return (
     <Canvas
@@ -23,21 +23,20 @@ const Overlay = () => {
         bottom: 0,
         right: 0,
         zIndex: 999,
-        backgroundColor: color,
       }}
     >
       <ScrollControls damping={0.25} pages={9}>
         <HtmlContainer />
         <ThreeContainer />
-        <BG />
+        <Background />
 
-        <ScrollController setColor={setColor} />
+        <ScrollController />
       </ScrollControls>
     </Canvas>
   );
 };
 
-const BG = () => {
+const Background = () => {
   useFrame((state, _) => {
     state.gl.setClearColor("white");
   });
@@ -92,7 +91,15 @@ const ThreeContainer = () => {
 };
 
 const HtmlContainer = () => {
-  const { distance } = useShowcase();
+  const {character} = useVisualization()
+  const { locked} = useShowcase()
+
+  const [distance, setDistance] = useState(0)
+
+  useFrame((_, delta) => {
+    setDistance(character.current?.position.x.toFixed(2))
+  })
+
   return (
     <Scroll html>
       {[...Array(3)].map((_, i) => (
@@ -102,17 +109,22 @@ const HtmlContainer = () => {
             <span className="col-span-1" />
             <span className="col-span-1">alpha</span>
           </div>
-          <div className="h-screen grid place-items-center text-[5vw] font-mono relative">
-            COMPONENTS
+          <div className="h-screen grid place-items-center text-[3vw] font-mono relative">
+            <div className="absolute bottom-[5vw] left-[7vw]">
+              komponensek_
+            </div>
+            <div className="absolute top-[5vw] right-[7vw] rotate-180">
+              komponensek_
+            </div>
           </div>
           <div className="h-screen grid place-items-center text-[5vw] font-mono relative">
             <div className="absolute bottom-[5vw] left-[7vw]">
-              {distance.toFixed(2)}
+              {distance}
               <span className="text-[3vw]"> m</span>
             </div>
           </div>
           <div className="h-screen grid place-items-center text-[5vw] font-mono relative">
-            LOCKDOWN
+            {locked ? "_ZÁROLVA" : "FELOLDVA"}
           </div>
 
           <div className="h-screen grid place-items-center text-[3vw] font-mono">
@@ -187,7 +199,6 @@ const ScrollController = () => {
       const asp = rem / 60000;
       if (Math.abs(getScroll()) <= 8) {
         scroll(THREE.MathUtils.lerp(4, 8, asp));
-        console.log(getScroll());
         setAlpha(1)
       } else {
 
@@ -196,12 +207,6 @@ const ScrollController = () => {
         setAlpha(0)
 
       }
-      // setColor
-      // scroll(
-      //   THREE.MathUtils.lerp(
-
-      //   )
-      // )
     }
     else {
       setAlpha(0)
@@ -211,7 +216,6 @@ const ScrollController = () => {
     console.log(a)
     state.gl.setClearAlpha(
       a
-      // damp(state.gl.getClearAlpha(), 0, 3, delta)
     );
   });
 };
