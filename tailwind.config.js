@@ -4,7 +4,15 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'mono': ['Ki Medium', 'monospace']
+        mono: ["Ki Medium", "monospace"],
+      },
+      fontSize: {
+        small: "calc(var(--vw) * 0.03)",
+        medium: "calc(var(--vw) * 0.05)",
+        large: "calc(var(--vw) * 0.07)",
+      },
+      screens: {
+        ultrawide: "1721px",
       },
       height: {
         screen: "calc(var(--vh))",

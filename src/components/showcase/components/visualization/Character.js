@@ -1,17 +1,14 @@
-import {
-  useAnimations,
-  useFBX,
-} from "@react-three/drei";
+import { useAnimations, useFBX } from "@react-three/drei";
 import { useShowcase } from "contexts/showcase";
 import { useEffect, useRef, useState } from "react";
 
 const Character = () => {
-  const { setVisualization } = useVisualization();
+  const { setCharacter } = useShowcase();
 
   const ref = useRef();
 
   useEffect(() => {
-    setVisualization({ character: ref });
+    setCharacter(ref);
   }, [ref.current?.position.x]);
   const { nodes, materials } = useGLTF("/models/daniel.glb");
 
@@ -24,9 +21,11 @@ const Character = () => {
 
   const { actions } = useAnimations([idle[0], walking[0], backward[0]], ref);
 
-  const { scene, distance } = useShowcase();
+  const { scene, distance, setFeedback } = useShowcase();
 
   const [anim, setAnim] = useState("Idle");
+  let lastPos = 0,
+    lastTime = 0;
 
   useFrame((_, delta) => {
     const trgt = scene === 2 ? distance : 5;
@@ -40,6 +39,8 @@ const Character = () => {
     } else {
       setAnim("Idle");
     }
+
+    setFeedback(ref.current.position.x > 5);
   });
 
   useEffect(() => {
@@ -135,7 +136,5 @@ export default Character;
 
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useVisualization } from "contexts/visualization";
-
 
 useGLTF.preload("/models/daniel.glb");

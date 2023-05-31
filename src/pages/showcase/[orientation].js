@@ -1,15 +1,17 @@
 import ShowcaseProvider from "contexts/showcase";
-import { Debugger, Feedback, Overlay, Visualization } from "components/showcase";
-import VisualizationProvider from "contexts/visualization";
+import {
+  Debugger,
+  Feedback,
+  Overlay,
+  Visualization,
+} from "components/showcase";
 
 const Showcase = () => {
   return (
     <ShowcaseProvider>
       <Debugger />
-      <VisualizationProvider>
-        <Overlay />
-        <Visualization />
-      </VisualizationProvider>
+      <Overlay />
+      <Visualization />
     </ShowcaseProvider>
   );
 };

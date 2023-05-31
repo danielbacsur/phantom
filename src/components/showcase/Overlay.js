@@ -8,7 +8,6 @@ import { useSpring, useSpringRef } from "@react-spring/core";
 import { animated } from "@react-spring/three";
 import {  } from "maath/three";
 import { lerp } from "maath/misc";
-import { useVisualization } from "contexts/visualization";
 
 const Overlay = () => {
 
@@ -47,42 +46,42 @@ const ThreeContainer = () => {
   return (
     <Scroll>
       <Item
-        url="/1.jpg"
+        url="/images/dram.png"
         scale={[width / 6, height / 2, 1]}
         position={[-width / 3, -height * 4, 0]}
       />
       <Item
-        url="/2.jpg"
+        url="/images/schematic.png"
         scale={[width / 6, height / 2, 1]}
         position={[width / 3, -height * 4, 0]}
       />
       <Item
-        url="/3.jpg"
+        url="/images/length.png"
         scale={[width / 6, height / 2, 1]}
         position={[-width / 3, -height * 5, 0]}
       />
       <Item
-        url="/4.jpg"
+        url="/images/bottom.png"
         scale={[width / 6, height / 2, 1]}
         position={[width / 3, -height * 5, 0]}
       />
       <Item
-        url="/5.jpg"
+        url="/images/xray.png"
         scale={[width / 6, height / 2, 1]}
         position={[-width / 3, -height * 6, 0]}
       />
       <Item
-        url="/6.jpg"
+        url="/images/paste.png"
         scale={[width / 6, height / 2, 1]}
         position={[width / 3, -height * 6, 0]}
       />
       <Item
-        url="/7.jpg"
+        url="/images/graybg.jpg"
         scale={[width / 6, height / 2, 1]}
         position={[-width / 3, -height * 7, 0]}
       />
       <Item
-        url="/8.jpg"
+        url="/images/plugged.png"
         scale={[width / 6, height / 2, 1]}
         position={[width / 3, -height * 7, 0]}
       />
@@ -91,8 +90,7 @@ const ThreeContainer = () => {
 };
 
 const HtmlContainer = () => {
-  const {character} = useVisualization()
-  const { locked} = useShowcase()
+  const { locked, character} = useShowcase()
 
   const [distance, setDistance] = useState(0)
 
@@ -104,12 +102,12 @@ const HtmlContainer = () => {
     <Scroll html>
       {[...Array(3)].map((_, i) => (
         <div key={i} style={{ marginTop: `-${i === 0 ? 800 : 0}vh` }}>
-          <div className="h-screen grid place-items-center text-[7vw] font-mono grid-cols-3">
+          <div className="h-screen grid place-items-center text-large font-mono grid-cols-3">
             <span className="col-span-1">cypher</span>
             <span className="col-span-1" />
             <span className="col-span-1">alpha</span>
           </div>
-          <div className="h-screen grid place-items-center text-[3vw] font-mono relative">
+          <div className="h-screen grid place-items-center text-small font-mono relative">
             <div className="absolute bottom-[5vw] left-[7vw]">
               komponensek_
             </div>
@@ -117,26 +115,28 @@ const HtmlContainer = () => {
               komponensek_
             </div>
           </div>
-          <div className="h-screen grid place-items-center text-[5vw] font-mono relative">
+          <div className="h-screen grid place-items-center text-medium font-mono relative">
             <div className="absolute bottom-[5vw] left-[7vw]">
               {distance}
-              <span className="text-[3vw]"> m</span>
+              <span className="text-small"> m</span>
             </div>
           </div>
-          <div className="h-screen grid place-items-center text-[5vw] font-mono relative">
-            {locked ? "_ZÁROLVA" : "FELOLDVA"}
+          <div className="h-screen grid place-items-center text-medium font-mono grid-rows-8">
+            <span className="row-span-2 transition-all duration-200" style={{textDecoration: locked ? "line-through" : "none", scale: locked ? "75%" : "100%"}}>feloldva</span>
+            <span className="row-span-4 transition-all duration-200" />
+            <span className="row-span-2 transition-all duration-200" style={{textDecoration: locked ? "none" : "line-through", scale: locked ? "100%" : "75%"}}>_zárolva</span>
           </div>
 
-          <div className="h-screen grid place-items-center text-[3vw] font-mono">
+          <div className="h-screen grid place-items-center text-small font-mono">
             .sch
           </div>
-          <div className="h-screen grid place-items-center text-[3vw] font-mono">
+          <div className="h-screen grid place-items-center text-small font-mono">
             .brd
           </div>
-          <div className="h-screen grid place-items-center text-[3vw] font-mono">
+          <div className="h-screen grid place-items-center text-small font-mono">
             forrasztás
           </div>
-          <div className="h-screen grid place-items-center text-[3vw] font-mono">
+          <div className="h-screen grid place-items-center text-small font-mono">
             ..100%
           </div>
         </div>
@@ -178,7 +178,7 @@ function Item({ url, scale, ...props }) {
 
 const ScrollController = () => {
   const { scroll, getScroll, setScroll } = useScroll();
-  const { scene, set } = useShowcase();
+  const { scene, setScene } = useShowcase();
   const [last, setLast] = useState(2);
   const [time, setTime] = useState(0);
 
@@ -196,16 +196,15 @@ const ScrollController = () => {
 
     if (scene === 4) {
       const rem = new Date().getTime() - time;
-      const asp = rem / 60000;
+      const asp = rem / 6000;
       if (Math.abs(getScroll()) <= 8) {
         scroll(THREE.MathUtils.lerp(4, 8, asp));
         setAlpha(1)
       } else {
 
-        set({ scene: 0 });
+        setScene(0)
         setScroll(0);
         setAlpha(0)
-
       }
     }
     else {
@@ -213,7 +212,6 @@ const ScrollController = () => {
     }
 
     sA(lerp(a, alpha, 4 * delta))
-    console.log(a)
     state.gl.setClearAlpha(
       a
     );

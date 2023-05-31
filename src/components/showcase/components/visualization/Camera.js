@@ -2,14 +2,12 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
 import { useShowcase } from "contexts/showcase";
 import { useRef } from "react";
-import { useVisualization } from "contexts/visualization";
 import { lerp } from "maath/misc";
 
 const Camera = () => {
-  const { character } = useVisualization();
   const cameraControlsRef = useRef();
   const { camera } = useThree();
-  const showcase = useShowcase();
+  const {character, ...showcase} = useShowcase();
 
   useFrame((_, delta) => {
     const time = new Date().getTime() / 30000 * Math.PI;
