@@ -36,7 +36,7 @@ const Background = () => {
     dampC(
       setter,
       (scene === 2 && character.current?.position.x > 5) ||
-        (scene === 3 && locked === 1)
+        (scene === 3 && locked)
         ? new Color("#FF6B6B")
         : new Color("white"),
       0.1,

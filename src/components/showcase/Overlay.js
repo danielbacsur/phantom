@@ -196,7 +196,7 @@ const ScrollController = () => {
 
     if (scene === 4) {
       const rem = new Date().getTime() - time;
-      const asp = rem / 6000;
+      const asp = rem / 60000;
       if (Math.abs(getScroll()) <= 8) {
         scroll(THREE.MathUtils.lerp(4, 8, asp));
         setAlpha(1)
