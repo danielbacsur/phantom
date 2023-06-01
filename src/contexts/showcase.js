@@ -21,19 +21,23 @@ const ShowcaseProvider = ({ children }) => {
 
   useEffect(() => {
     return onSnapshot(doc(database, "showcase", "configuration"), (doc) => {
+      console.warn("CONFIGURATION READ")
       const { scene: _scene } = doc.data();
       setScene(_scene);
     });
-  }, []);
+  });
   useEffect(() => {
     return onSnapshot(doc(database, "showcase", "device"), (doc) => {
+      console.warn("DEVICE READ")
+
       const { locked: _locked, distance: _distance } = doc.data();
       setLocked(_locked);
       setDistance(_distance);
     });
-  }, []);
+  });
   useEffect(() => {
     return onSnapshot(doc(database, "showcase", "visibility"), (doc) => {
+      console.warn("VISIBILITY READ")
       const { left, right } = doc.data();
       setMirror(
         left && right
@@ -45,7 +49,7 @@ const ShowcaseProvider = ({ children }) => {
           : 0
       );
     });
-  }, []);
+  });
   useEffect(() => {
     (async () => {
       await updateDoc(doc(database, "showcase", "configuration"), {
@@ -82,6 +86,10 @@ const ShowcaseProvider = ({ children }) => {
     return () =>
       window.removeEventListener("visibilitychange", visibilityEvent);
   }, [router.query.orientation]);
+
+  useEffect(() => {
+    console.log(mirror)
+  }, [mirror])
 
   return (
     <ShowcaseContext.Provider

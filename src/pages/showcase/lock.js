@@ -13,7 +13,7 @@ const Lock = () => {
   );
 };
 
-export default (
+export default () => (
   <ShowcaseProvider>
     <Lock />
   </ShowcaseProvider>
