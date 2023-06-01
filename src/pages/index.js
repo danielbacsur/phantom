@@ -8,7 +8,7 @@ import Cypher from "components/index/Cypher";
 
 function ThreeScene() {
   return (
-    <div className="order-first w-full lg:ml-auto aspect-square">
+    <div className="order-first w-full lg:ml-auto aspect-square -mb-[10vh] lg:mb-0">
       <Canvas orthographic>
         <Environment preset="city" />
         <Suspense fallback={null}>
@@ -109,7 +109,7 @@ const ZoomController = () => {
 
 export default function Home() {
   return (
-    <section class="min-h-screen relative grid place-items-center bg-white">
+    <section class="min-h-screen relative grid place-items-center bg-white -mt-[10vh] lg:mt-0">
       <div class="relative items-center w-full px-5 mx-auto md:px-12 lg:px-16 max-w-7xl">
         <div class="relative flex-col items-start m-auto align-middle">
           <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-24">
