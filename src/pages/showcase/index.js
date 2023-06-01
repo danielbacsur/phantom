@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Showcase = () => {
   return (
-    <div className="h-screen grid grid-cols-2">
+    <div className="h-screen grid grid-cols-2 place-items-center">
       <Link
         className="bg-black text-white"
         href="showcase/left"
