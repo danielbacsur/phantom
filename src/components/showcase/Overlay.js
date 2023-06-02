@@ -90,6 +90,7 @@ const ThreeContainer = () => {
 };
 
 const HtmlContainer = () => {
+  const {size} = useThree()
   const { locked, character} = useShowcase()
 
   const [distance, setDistance] = useState(0)
@@ -102,12 +103,12 @@ const HtmlContainer = () => {
     <Scroll html>
       {[...Array(3)].map((_, i) => (
         <div key={i} style={{ marginTop: `-${i === 0 ? 800 : 0}vh` }}>
-          <div className="h-screen grid place-items-center text-large font-mono grid-cols-3">
+          <div className="h-screen grid place-items-center font-mono grid-cols-3" style={{fontSize: size.width * 0.07}}>
             <span className="col-span-1">cypher</span>
             <span className="col-span-1" />
             <span className="col-span-1">alpha</span>
           </div>
-          <div className="h-screen grid place-items-center text-small font-mono relative">
+          <div className="h-screen grid place-items-center font-mono relative"  style={{fontSize: size.width * 0.03}}>
             <div className="absolute bottom-[5vw] left-[7vw]">
               komponensek_
             </div>
@@ -115,28 +116,28 @@ const HtmlContainer = () => {
               komponensek_
             </div>
           </div>
-          <div className="h-screen grid place-items-center text-medium font-mono relative">
+          <div className="h-screen grid place-items-center text-medium font-mono relative"  style={{fontSize: size.width * 0.05}}>
             <div className="absolute bottom-[5vw] left-[7vw]">
               {distance}
-              <span className="text-small"> m</span>
+              <span  style={{fontSize: size.width * 0.03}}> m</span>
             </div>
           </div>
-          <div className="h-screen grid place-items-center text-medium font-mono grid-rows-8">
+          <div className="h-screen grid place-items-center font-mono grid-rows-8"  style={{fontSize: size.width * 0.05}}>
             <span className="row-span-2 transition-all duration-200" style={{textDecoration: locked ? "line-through" : "none", scale: locked ? "75%" : "100%"}}>feloldva</span>
             <span className="row-span-4 transition-all duration-200" />
             <span className="row-span-2 transition-all duration-200" style={{textDecoration: locked ? "none" : "line-through", scale: locked ? "100%" : "75%"}}>_zárolva</span>
           </div>
 
-          <div className="h-screen grid place-items-center text-small font-mono">
+          <div className="h-screen grid place-items-center font-mono" style={{fontSize: size.width * 0.03}}>
             .sch
           </div>
-          <div className="h-screen grid place-items-center text-small font-mono">
+          <div className="h-screen grid place-items-center font-mono" style={{fontSize: size.width * 0.03}}>
             .brd
           </div>
-          <div className="h-screen grid place-items-center text-small font-mono">
+          <div className="h-screen grid place-items-center font-mono" style={{fontSize: size.width * 0.03}}>
             forrasztás
           </div>
-          <div className="h-screen grid place-items-center text-small font-mono">
+          <div className="h-screen grid place-items-center font-mono" style={{fontSize: size.width * 0.03}}>
             ..100%
           </div>
         </div>
