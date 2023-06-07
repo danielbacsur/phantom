@@ -127,16 +127,17 @@ export default function Home() {
                 </div>
                 <div class="flex flex-col items-center justify-center gap-3 mt-10 lg:flex-row lg:justify-start">
                   <a
-                    href="#"
+                    href="mailto:contact@danielbacsur.com"
                     class="items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-black border-2 border-black rounded-full nline-flex hover:bg-transparent hover:border-black hover:text-black focus:outline-none lg:w-auto focus-visible:outline-black text-sm focus-visible:ring-black"
                   >
-                    Iskolánk
+                    Elérhetőség
                   </a>
                   <a
-                    href="https://otio.hu/"
+                    href="https://drive.google.com/drive/folders/1xK7kzcaJdcT83gcKC4vui7YUfOYyoNvD?usp=sharing"
+                    target="_blank"
                     class="inline-flex items-center justify-center text-sm font-semibold text-black duration-200 hover:text-blue-500 focus:outline-none focus-visible:outline-gray-600"
                   >
-                    OTIO Honlapja
+                    Megosztott meghajtónk
                     <span aria-hidden="true"> → </span>
                   </a>
                 </div>
