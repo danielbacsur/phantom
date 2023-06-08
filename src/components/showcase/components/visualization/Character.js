@@ -1,7 +1,6 @@
-import { useAnimations, useFBX } from "@react-three/drei";
+import { useAnimations, useFBX, useGLTF } from "@react-three/drei";
 import { useShowcase } from "contexts/showcase";
 import { useEffect, useRef, useState } from "react";
-import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 
 const Character = () => {
