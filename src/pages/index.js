@@ -10,7 +10,7 @@ function ThreeScene() {
   return (
     <div className="order-first w-full lg:ml-auto aspect-square -mb-[8vh] lg:mb-0">
       <Canvas orthographic>
-        <Environment preset="city" />
+        <Environment files="enviroments/city.hdr" />
         <Suspense fallback={null}>
           <Cypher />
         </Suspense>
